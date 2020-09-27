@@ -6,12 +6,64 @@
 参考 https://github.com/alibaba/canal/wiki/QuickStart
 
 依次安装mysql，zookeeper,kafka,配置启动canal
+### canal关键配置
 
-### run
+1. instance.properties
+```properties
+# table meta tsdb info 
+# 需要给canal授权canal_tsdb的curd
+canal.instance.tsdb.enable=true
+canal.instance.tsdb.url=jdbc:mysql://127.0.0.1:3306/canal_tsdb
+canal.instance.tsdb.dbUsername=canal
+canal.instance.tsdb.dbPassword=canal
+
+# 数据库相关
+canal.instance.master.address=127.0.0.1:3306
+canal.instance.dbUsername=canal
+canal.instance.dbPassword=canal
+
+# table regex
+canal.instance.filter.regex=.*\\..*
+# table black regex
+canal.instance.filter.black.regex=
+
+
+# mq config
+canal.mq.topic=canal_default_topic
+# dynamic topic route by schema or table regex
+canal.mq.dynamicTopic=canal_tsdb\\..*
+canal.mq.partition=0
+# hash partition config
+# canal.mq.partitionsNum=3
+# canal.mq.partitionHash=.*\\..*
 
 ```
-spring-boot:run
+
+2. canal.properties
+```properties
+
+canal.mq.servers=127.0.0.1:9092
+canal.instance.tsdb.spring.xml = classpath:spring/tsdb/mysql-tsdb.xml
+
 ```
+
+### 启动canal
+
+1. 启动zk和kafka
+    ```
+    zookeeper-server-start /usr/local/etc/kafka/zookeeper.properties & kafka-server-start /usr/local/etc/kafka/server.properties
+    ```
+
+2. 启动canal
+    ```
+    # 进入canal目录
+    ./bin/startup.sh
+    ```
+
+3. 启动项目监听，然后修改数据记录看效果
+    ```
+    spring-boot:run
+    ```
 
 ### QA
 
