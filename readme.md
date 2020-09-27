@@ -81,3 +81,26 @@ ALTER USER 'canal'@'%' IDENTIFIED WITH mysql_native_password BY 'canal';
 FLUSH PRIVILEGES;
 ```
 
+
+
+### 运行日志
+
+```
+2020-09-27 18:05:16.535  INFO 44222 --- [ntainer#3-0-C-1] c.s.kafka.example.mq.UserTopicListener   : message: {"data":[{"id":"2","account":"","user_name":"0","password":"","age":null,"create_time":"2020-09-27 18:05:16","update_time":"2020-09-27 18:05:16"}],"database":"canal_tsdb","es":1601201116000,"id":2,"isDdl":false,"mysqlType":{"id":"int unsigned","account":"varchar(50)","user_name":"int","password":"varchar(50)","age":"INT","create_time":"timestamp","update_time":"timestamp"},"old":null,"pkNames":["id"],"sql":"","sqlType":{"id":4,"account":12,"user_name":4,"password":12,"age":4,"create_time":93,"update_time":93},"table":"t_user","ts":1601201116505,"type":"INSERT"}
+2020-09-27 18:05:16.578  INFO 44222 --- [ntainer#3-0-C-1] c.s.kafka.example.mq.UserTopicListener   : table: t_user
+2020-09-27 18:05:16.578  INFO 44222 --- [ntainer#3-0-C-1] c.s.kafka.example.mq.UserTopicListener   : before: null
+2020-09-27 18:05:16.578  INFO 44222 --- [ntainer#3-0-C-1] c.s.kafka.example.mq.UserTopicListener   : after: [{"password":"","update_time":"2020-09-27 18:05:16","create_time":"2020-09-27 18:05:16","user_name":"0","id":"2","account":""}]
+2020-09-27 18:05:24.824  INFO 44222 --- [ntainer#3-0-C-1] c.s.kafka.example.mq.UserTopicListener   : message: {"data":[{"id":"4","account":"222","user_name":"0","password":"","age":null,"create_time":"2020-09-27 18:05:24","update_time":"2020-09-27 18:05:24"}],"database":"canal_tsdb","es":1601201124000,"id":3,"isDdl":false,"mysqlType":{"id":"int unsigned","account":"varchar(50)","user_name":"int","password":"varchar(50)","age":"INT","create_time":"timestamp","update_time":"timestamp"},"old":null,"pkNames":["id"],"sql":"","sqlType":{"id":4,"account":12,"user_name":4,"password":12,"age":4,"create_time":93,"update_time":93},"table":"t_user","ts":1601201124819,"type":"INSERT"}
+2020-09-27 18:05:24.825  INFO 44222 --- [ntainer#3-0-C-1] c.s.kafka.example.mq.UserTopicListener   : table: t_user
+2020-09-27 18:05:24.825  INFO 44222 --- [ntainer#3-0-C-1] c.s.kafka.example.mq.UserTopicListener   : before: null
+2020-09-27 18:05:24.825  INFO 44222 --- [ntainer#3-0-C-1] c.s.kafka.example.mq.UserTopicListener   : after: [{"password":"","update_time":"2020-09-27 18:05:24","create_time":"2020-09-27 18:05:24","user_name":"0","id":"4","account":"222"}]
+2020-09-27 18:05:39.472  INFO 44222 --- [ntainer#3-0-C-1] c.s.kafka.example.mq.UserTopicListener   : message: {"data":[{"id":"2","account":"","user_name":"0","password":"","age":null,"create_time":"2020-09-27 18:05:16","update_time":"2020-09-27 18:05:16"}],"database":"canal_tsdb","es":1601201139000,"id":4,"isDdl":false,"mysqlType":{"id":"int unsigned","account":"varchar(50)","user_name":"int","password":"varchar(50)","age":"INT","create_time":"timestamp","update_time":"timestamp"},"old":null,"pkNames":["id"],"sql":"","sqlType":{"id":4,"account":12,"user_name":4,"password":12,"age":4,"create_time":93,"update_time":93},"table":"t_user","ts":1601201139467,"type":"DELETE"}
+2020-09-27 18:05:39.472  INFO 44222 --- [ntainer#3-0-C-1] c.s.kafka.example.mq.UserTopicListener   : table: t_user
+2020-09-27 18:05:39.473  INFO 44222 --- [ntainer#3-0-C-1] c.s.kafka.example.mq.UserTopicListener   : before: null
+2020-09-27 18:05:39.473  INFO 44222 --- [ntainer#3-0-C-1] c.s.kafka.example.mq.UserTopicListener   : after: [{"password":"","update_time":"2020-09-27 18:05:16","create_time":"2020-09-27 18:05:16","user_name":"0","id":"2","account":""}]
+2020-09-27 18:13:21.357  INFO 44222 --- [ntainer#3-0-C-1] c.s.kafka.example.mq.UserTopicListener   : message: {"data":[{"id":"4","account":"222","user_name":"1","password":"","age":null,"create_time":"2020-09-27 18:05:24","update_time":"2020-09-27 18:13:21"}],"database":"canal_tsdb","es":1601201601000,"id":5,"isDdl":false,"mysqlType":{"id":"int unsigned","account":"varchar(50)","user_name":"int","password":"varchar(50)","age":"INT","create_time":"timestamp","update_time":"timestamp"},"old":[{"user_name":"0","update_time":"2020-09-27 18:05:24"}],"pkNames":["id"],"sql":"","sqlType":{"id":4,"account":12,"user_name":4,"password":12,"age":4,"create_time":93,"update_time":93},"table":"t_user","ts":1601201601352,"type":"UPDATE"}
+2020-09-27 18:13:21.358  INFO 44222 --- [ntainer#3-0-C-1] c.s.kafka.example.mq.UserTopicListener   : table: t_user
+2020-09-27 18:13:21.358  INFO 44222 --- [ntainer#3-0-C-1] c.s.kafka.example.mq.UserTopicListener   : before: [{"update_time":"2020-09-27 18:05:24","user_name":"0"}]
+2020-09-27 18:13:21.358  INFO 44222 --- [ntainer#3-0-C-1] c.s.kafka.example.mq.UserTopicListener   : after: [{"password":"","update_time":"2020-09-27 18:13:21","create_time":"2020-09-27 18:05:24","user_name":"1","id":"4","account":"222"}]
+
+```
