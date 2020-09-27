@@ -31,9 +31,13 @@ canal.instance.filter.black.regex=
 # mq config
 canal.mq.topic=canal_default_topic
 # dynamic topic route by schema or table regex
+# 这里是说针对canal_tsdb库的所有表，指定topic为 canal_tsdb.表名
 canal.mq.dynamicTopic=canal_tsdb\\..*
 canal.mq.partition=0
-# hash partition config
+
+
+# hash partition config 
+# kafka的分区数量配置和分区hash规则,下面的例子是按表名hash
 # canal.mq.partitionsNum=3
 # canal.mq.partitionHash=.*\\..*
 
