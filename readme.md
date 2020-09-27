@@ -7,6 +7,12 @@
 
 依次安装mysql，zookeeper,kafka,配置启动canal
 
+### run
+
+```
+spring-boot:run
+```
+
 ### QA
 
 1. 关于mysql8的canal账户,如果出现`caching_sha2_password Auth failed`问题，
