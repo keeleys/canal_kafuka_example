@@ -91,7 +91,7 @@ ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'xxxxxx';
 
 ### 运行日志
 
-```
+```txt
 2020-09-27 18:05:16.535  INFO 44222 --- [ntainer#3-0-C-1] c.s.kafka.example.mq.UserTopicListener   : message: {"data":[{"id":"2","account":"","user_name":"0","password":"","age":null,"create_time":"2020-09-27 18:05:16","update_time":"2020-09-27 18:05:16"}],"database":"canal_tsdb","es":1601201116000,"id":2,"isDdl":false,"mysqlType":{"id":"int unsigned","account":"varchar(50)","user_name":"int","password":"varchar(50)","age":"INT","create_time":"timestamp","update_time":"timestamp"},"old":null,"pkNames":["id"],"sql":"","sqlType":{"id":4,"account":12,"user_name":4,"password":12,"age":4,"create_time":93,"update_time":93},"table":"t_user","ts":1601201116505,"type":"INSERT"}
 2020-09-27 18:05:16.578  INFO 44222 --- [ntainer#3-0-C-1] c.s.kafka.example.mq.UserTopicListener   : table: t_user
 2020-09-27 18:05:16.578  INFO 44222 --- [ntainer#3-0-C-1] c.s.kafka.example.mq.UserTopicListener   : before: null
