@@ -1,5 +1,6 @@
 ### canal1.1.4 + kafka 
 
+![](https://user-gold-cdn.xitu.io/2020/3/17/170e8dbf385d294f?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
 ![img_master](https://camo.githubusercontent.com/eec1605862fe9e9989b97dd24f28a4bc5d7debec/687474703a2f2f646c2e69746579652e636f6d2f75706c6f61642f6174746163686d656e742f303038302f333038362f34363863316131342d653761642d333239302d396433642d3434616335303161373232372e6a7067)
 
 > java接收端
@@ -48,6 +49,7 @@ canal.mq.partition=0
 2. canal.properties
 ```properties
 
+canal.serverMode = kafka
 canal.mq.servers=127.0.0.1:9092
 canal.instance.tsdb.spring.xml = classpath:spring/tsdb/mysql-tsdb.xml
 
@@ -81,6 +83,10 @@ ALTER USER 'canal'@'%' IDENTIFIED WITH mysql_native_password BY 'canal';
 FLUSH PRIVILEGES;
 ```
 
+2. mysql 链接问题
+```
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'xxxxxx';
+``
 
 
 ### 运行日志
