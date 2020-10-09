@@ -32,7 +32,7 @@ zookeeper-server-start /usr/local/etc/kafka/zookeeper.properties & kafka-server-
 ```
 
 ### [安装canal](https://github.com/alibaba/canal/wiki/QuickStart)
-docker 启动
+docker和本地启动 二选一
 
 ```
 # docker 启动
@@ -57,7 +57,7 @@ tail -f /home/admin/canal-server/logs/example/meta.log
 ```
 # 下载 https://github.com/alibaba/canal/releases/download/canal-1.1.4/canal.deployer-1.1.4.tar.gz
 
-# 修改conf/example/instance.properties和conf/canal.properties
+# 参考上面的docker配吹，修改conf/example/instance.properties和conf/canal.properties
 # 本地启动 进入canal目录
 
 ./bin/startup.sh
