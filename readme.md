@@ -1,77 +1,77 @@
-### canal1.1.4 + kafka 
+## mysql8/zookeeper/kafka/canal1.1.4
 
 ![](https://user-gold-cdn.xitu.io/2020/3/17/170e8dbf385d294f?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
 ![img_master](https://camo.githubusercontent.com/eec1605862fe9e9989b97dd24f28a4bc5d7debec/687474703a2f2f646c2e69746579652e636f6d2f75706c6f61642f6174746163686d656e742f303038302f333038362f34363863316131342d653761642d333239302d396433642d3434616335303161373232372e6a7067)
 
-> java接收端
 
-### 安装步骤
+## 安装步骤
 参考 https://github.com/alibaba/canal/wiki/QuickStart
+依配置启动mysql，zookeeper,kafka, 启动canal
 
-依次安装mysql，zookeeper,kafka,配置启动canal
-### canal关键配置
+### 配置mysql (vim /usr/local/etc/my.cnf)
+```
+# Default Homebrew MySQL server config
+[mysqld]
+# Only allow connections from localhost
+bind-address = 0.0.0.0
+mysqlx-bind-address = 0.0.0.0
 
-1. instance.properties
-```properties
-# table meta tsdb info 
-# 需要给canal授权canal_tsdb的curd
-canal.instance.tsdb.enable=true
-canal.instance.tsdb.url=jdbc:mysql://127.0.0.1:3306/canal_tsdb
-canal.instance.tsdb.dbUsername=canal
-canal.instance.tsdb.dbPassword=canal
-
-# 数据库相关
-canal.instance.master.address=127.0.0.1:3306
-canal.instance.dbUsername=canal
-canal.instance.dbPassword=canal
-
-# table regex
-canal.instance.filter.regex=.*\\..*
-# table black regex
-canal.instance.filter.black.regex=
-
-
-# mq config
-canal.mq.topic=canal_default_topic
-# dynamic topic route by schema or table regex
-# 这里是说针对canal_tsdb库的所有表，指定topic为 canal_tsdb.表名
-canal.mq.dynamicTopic=canal_tsdb\\..*
-canal.mq.partition=0
-
-
-# hash partition config 
-# kafka的分区数量配置和分区hash规则,下面的例子是按表名hash
-# canal.mq.partitionsNum=3
-# canal.mq.partitionHash=.*\\..*
-
+# 开启 binlog
+log-bin=mysql-bin
+# 选择 ROW 模式
+binlog-format=ROW 
+# 配置 MySQL replaction 需要定义，不要和 canal 的 slaveId 重复
+server_id=1
 ```
 
-2. canal.properties
-```properties
-
-canal.serverMode = kafka
-canal.mq.servers=127.0.0.1:9092
-canal.instance.tsdb.spring.xml = classpath:spring/tsdb/mysql-tsdb.xml
+### [安装zookeeper和kafka](https://kafka.apache.org/quickstart)
 
 ```
+## 启动
+zookeeper-server-start /usr/local/etc/kafka/zookeeper.properties & kafka-server-start /usr/local/etc/kafka/server.properties
+```
 
-### 启动canal
+### [安装canal](https://github.com/alibaba/canal/wiki/QuickStart)
+docker 启动
 
-1. 启动zk和kafka
-    ```
-    zookeeper-server-start /usr/local/etc/kafka/zookeeper.properties & kafka-server-start /usr/local/etc/kafka/server.properties
-    ```
+```
+# docker 启动
+docker run --name canal-server \
+-e canal.instance.master.address=172.16.101.72:3306 \
+-e canal.instance.dbUsername=canal \
+-e canal.instance.dbPassword=canal \
+-e canal.mq.topic=canal_default_topic \
+-e canal.serverMode=kafka \
+-e canal.mq.dynamicTopic="canal_tsdb\\..*" \
+-e canal.mq.servers=172.16.101.72:9092 \
+-p 11111:11111 \
+-d canal/canal-server:v1.1.4
 
-2. 启动canal
-    ```
-    # 进入canal目录
-    ./bin/startup.sh
-    ```
+# 查看日志
+docker exec -it canal-server bash
+tail -f /home/admin/canal-server/logs/canal/canal.log
+tail -f /home/admin/canal-server/logs/example/example.log
+tail -f /home/admin/canal-server/logs/example/meta.log
+```
+本地启动
+```
+# 下载 https://github.com/alibaba/canal/releases/download/canal-1.1.4/canal.deployer-1.1.4.tar.gz
 
-3. 启动项目监听，然后修改数据记录看效果
-    ```
-    spring-boot:run
-    ```
+# 修改conf/example/instance.properties和conf/canal.properties
+# 本地启动 进入canal目录
+
+./bin/startup.sh
+
+tail -f logs/canal/canal.log
+tail -f logs/example/example.log
+
+./bin/stop.sh
+```
+
+### 启动项目监听，然后修改数据记录看效果
+```
+spring-boot:run
+```
 
 ### QA
 
@@ -86,7 +86,7 @@ FLUSH PRIVILEGES;
 2. mysql 链接问题
 ```
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'xxxxxx';
-``
+```
 
 
 ### 运行日志

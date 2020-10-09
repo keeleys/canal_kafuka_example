@@ -4,7 +4,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserTopicListener extends DefaultTopicListener{
+public class UserTopicListener extends AbstractTopicListener{
     @KafkaListener(topics = "canal_tsdb.t_user")
     public void handlerUser(String message){
         printMq(message);
