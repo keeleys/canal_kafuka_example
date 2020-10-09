@@ -54,6 +54,17 @@ docker exec -it canal-server bash
 tail -f /home/admin/canal-server/logs/canal/canal.log
 tail -f /home/admin/canal-server/logs/example/example.log
 tail -f /home/admin/canal-server/logs/example/meta.log
+
+# canal.instance.filter.regex的书写格式
+mysql 数据解析关注的表，Perl正则表达式.
+多个正则之间以逗号(,)分隔，转义符需要双斜杠(\\) 
+常见例子：
+1.  所有表：.*   or  .*\\..*
+2.  canal schema下所有表： canal\\..*
+3.  canal下的以canal打头的表：canal\\.canal.*
+4.  canal schema下的一张表：canal.test1
+5.  多个规则组合使用：canal\\..*,mysql.test1,mysql.test2 (逗号分隔)
+
 ```
 本地启动
 ```
@@ -69,15 +80,6 @@ tail -f logs/example/example.log
 
 ./bin/stop.sh
 
-canal.instance.filter.regex的书写格式
-mysql 数据解析关注的表，Perl正则表达式.
-多个正则之间以逗号(,)分隔，转义符需要双斜杠(\\) 
-常见例子：
-1.  所有表：.*   or  .*\\..*
-2.  canal schema下所有表： canal\\..*
-3.  canal下的以canal打头的表：canal\\.canal.*
-4.  canal schema下的一张表：canal.test1
-5.  多个规则组合使用：canal\\..*,mysql.test1,mysql.test2 (逗号分隔)
 ```
 
 ### 启动项目监听，然后修改数据记录看效果
