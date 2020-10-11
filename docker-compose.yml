@@ -1,0 +1,45 @@
+version: '3'
+services:
+  canal1:
+    image: canal/canal-server:v1.1.4
+    container_name: canal1         # 容器名称
+#    restart: always                 # 失败自动重启策略
+    environment:
+      - canal.id=1
+      - canal.register.ip=192.168.31.245
+      - canal.mq.servers=192.168.31.245:9092
+      - canal.zkServers=192.168.31.245:2181
+      - canal.instance.master.address=192.168.31.245:3306
+      - canal.instance.global.spring.xml=classpath:spring/default-instance.xml
+      - canal.instance.dbUsername=canal
+      - canal.instance.dbPassword=canal
+      - canal.instance.filter.query.dml=true
+      - canal.instance.filter.transaction.entry=true
+      - canal.instance.filter.regex=canal_tsdb.t_role,canal_tsdb.t_user
+      - canal.serverMode=kafka
+      - canal.mq.topic=canal_default_topic
+      - canal.mq.dynamicTopic=canal_tsdb\\..*
+    ports:
+      - "11111"
+  canal2:
+    image: canal/canal-server:v1.1.4
+    container_name: canal2         # 容器名称
+#    restart: always                 # 失败自动重启策略
+    environment:
+      - canal.id=2
+      - canal.register.ip=192.168.31.245
+      - canal.port=11121
+      - canal.mq.servers=192.168.31.245:9092
+      - canal.zkServers=192.168.31.245:2181
+      - canal.instance.master.address=192.168.31.245:3306
+      - canal.instance.global.spring.xml=classpath:spring/default-instance.xml
+      - canal.instance.dbUsername=canal
+      - canal.instance.dbPassword=canal
+      - canal.instance.filter.query.dml=true
+      - canal.instance.filter.transaction.entry=true
+      - canal.instance.filter.regex=canal_tsdb.t_role,canal_tsdb.t_user
+      - canal.serverMode=kafka
+      - canal.mq.topic=canal_default_topic
+      - canal.mq.dynamicTopic=canal_tsdb\\..*
+    ports:
+      - "11121"
