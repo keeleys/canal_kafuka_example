@@ -102,6 +102,8 @@ FLUSH PRIVILEGES;
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'xxxxxx';
 ```
 
+3. 集群
+用的HA模式，多个canal-service注册同一个zk,通过zookeeper控制，只有一个服务器会真正启动的。查看注册用`ls /otter/canal/cluster`
 
 ### 运行日志
 
